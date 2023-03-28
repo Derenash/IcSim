@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+}
+
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+}
+
+.sliders-container {
+  padding: 20px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label-container, .slider-value-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  /* justify-content: center; */
+  width: 120px;
+}
+
+
+.slider-row input[type="range"] {
+  flex: 3;
+}
+
+.slider-value {
+  /* margin-left: 10px; */
+  text-align: right;
+  font-family: 'Courier New', monospace;
+}
