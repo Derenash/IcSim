@@ -90,7 +90,7 @@ export function parseLambdaTerm(term) {
     } else {
       const newNode = {
         type: "val",
-        label: variable,
+        name: variable,
         ports: [path_to_parent],
       };
       const result = { target: val_id, slot: 0 }
@@ -101,7 +101,7 @@ export function parseLambdaTerm(term) {
   }
 
   function addDups() {
-    let dupLabel = 1; // Initialize a label for duplicate nodes
+    let dupLabel = 1;
   
     // Keep iterating while there are still open_ports
     while (Object.keys(open_ports).length > 0) {
@@ -120,7 +120,7 @@ export function parseLambdaTerm(term) {
           nodes[dup_id] = erasureNode;
           nodes[open_port.target].ports[open_port.slot] = {target: dup_id, slot: 0}
           nodeId++;
-          delete open_ports[variable]; // Remove this variable from open_ports
+          delete open_ports[variable];
         }
         // If there's only one use for this variable,
         // directly connect it to the corresponding node
@@ -131,9 +131,6 @@ export function parseLambdaTerm(term) {
           let des_node = nodes[open_port.uses[0].target];
           let ori_node = nodes[open_port.target]; 
           des_node.ports[open_port.uses[0].slot] = ori_port
-          console.log(nodes)
-          console.log(ori_node)
-          console.log(open_port.target)
           ori_node.ports[open_port.slot] = des_port
           nodes[open_port.uses[0].target] = des_node;
           nodes[open_port.target] = ori_node;
@@ -172,19 +169,18 @@ export function parseLambdaTerm(term) {
             slot: 2,
             uses: rightUses,
           };
-          delete open_ports[variable]; // Remove this variable from open_ports
+          delete open_ports[variable];
         }
       }
     }
   }
   
   addDups();
-  // new_world = arrayToDict(nodes)
   return nodes;
   
 }
 
-const term  = "ueee"
+const term  = "(λfλx(f (f x)) λaλb(a (a b)))"
 const nodes = parseLambdaTerm(term)
 console.log(JSON.stringify(nodes))
 
@@ -207,7 +203,6 @@ submitLambda.addEventListener('click', () => {
   }
 });
 
-// index.js
 document.addEventListener("DOMContentLoaded", () => {
   const lambdaInput = document.getElementById("lambdaInput");
   lambdaInput.value = startingTerm;

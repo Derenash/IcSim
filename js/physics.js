@@ -1,4 +1,5 @@
-import { repulsion, attraction, cooling } from './sliders.js'
+import { repulsion, attraction, cooling, reduction, updateReductionSelect} from './sliders.js';
+import { reduceNodes } from './reduction.js';
 
 // Physics
 export function tick(world) {
@@ -26,22 +27,32 @@ export function tick(world) {
       obj1.vel.z += repulsionForce * direction.z;
     }
 
-    for (const port of obj1.ports) {
+    obj1.ports.forEach((port, idx) => {
       const obj2 = world[port.target];
+      if (!obj1 || !obj2) return;
       const distance = distanceBetweenPoints(obj1.pos, obj2.pos);
-      const attractionForce = attraction * Math.pow(distance, attractionPow) / 500000;
+      const to_reduce = ((idx + port.slot) === 0) && (reduction !== 'Off') && (obj1.type === 'trig') && (obj2.type === 'trig');
+      const port_attraction = to_reduce ? attraction * 5 : attraction;
+      const attractionForce = port_attraction * Math.pow(distance, attractionPow) / 500000;
+      if ((distance <= 60) && to_reduce) {
+        reduceNodes(world, id1, port.target)
+        if (reduction === "One") {
+          updateReductionSelect("Off")
+        }
+        ;
+      }
 
-      if (distance === 0) continue;
+      if (distance === 0) return;
       const direction = {
         x: (obj2.pos.x - obj1.pos.x) / distance,
         y: (obj2.pos.y - obj1.pos.y) / distance,
         z: (obj2.pos.z - obj1.pos.z) / distance,
       };
-
+    
       obj1.vel.x += attractionForce * direction.x;
       obj1.vel.y += attractionForce * direction.y;
       obj1.vel.z += attractionForce * direction.z;
-    }
+    });    
 
     obj1.pos.x += obj1.vel.x;
     obj1.pos.y += obj1.vel.y;

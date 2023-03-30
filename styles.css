@@ -23,7 +23,7 @@ canvas {
   left: 0;
 }
 
-.slider-row {
+.slider-row, .reduction-container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -33,7 +33,6 @@ canvas {
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  /* justify-content: center; */
   width: 120px;
 }
 
@@ -42,12 +41,10 @@ canvas {
 }
 
 .slider-value {
-  /* margin-left: 10px; */
   text-align: right;
   font-family: 'Courier New', monospace;
 }
 
-/* Add styles for the new input field and submit button */
 .lambda-input-container {
   position: absolute;
   bottom: 20px;
@@ -78,4 +75,33 @@ canvas {
 
 #submitLambda:hover {
   background-color: #45a049;
+}
+
+.reduction-container {
+  display: flex;
+  align-items: center;
+}
+
+.reduction-button {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  transition-duration: 0.2s;
+  flex-grow: 1;
+}
+
+.reduction-button:hover {
+  background-color: #ddd;
+}
+
+.reduction-button.active {
+  background-color: #4CAF50;
+  color: white;
 }

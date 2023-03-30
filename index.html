@@ -12,6 +12,12 @@
     <button id="submitLambda">Submit</button>
   </div>
   <div class="sliders-container">
+    <div class="reduction-container">
+      <label>Reduction:</label>
+      <button class="reduction-button active" data-value="Off">Off</button>
+      <button class="reduction-button" data-value="One">One</button>
+      <button class="reduction-button" data-value="All">All</button>
+    </div>
     <div class="slider-row">
       <div class="label-container">
         <label for="repulsion">Repulsion:</label>
@@ -25,7 +31,7 @@
       <div class="label-container">
         <label for="attraction">Attraction:</label>
       </div>
-      <input type="range" id="attraction" min="0" max="200" step="0.5" value="40">
+      <input type="range" id="attraction" min="0" max="200" step="1" value="40">
       <div class="slider-value-container">
         <span class="slider-value" id="attraction-value"></span>
       </div>
@@ -34,7 +40,7 @@
       <div class="label-container">
         <label for="cooling">Cooling:</label>
       </div>
-      <input type="range" id="cooling" min="90" max="100" step="0.1" value="99.8">
+      <input type="range" id="cooling" min="90" max="100" step="0.1" value="99">
       <div class="slider-value-container">
         <span class="slider-value" id="cooling-value"></span>
       </div>

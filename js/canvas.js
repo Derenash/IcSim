@@ -21,7 +21,8 @@ export function render(world, canvas) {
     if (obj.type === 'eras') {
       ctx.beginPath();
       ctx.arc(x, y, size / 3, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'red'; // set stroke color to red
+      ctx.strokeStyle = 'red'; 
+      ctx.fillStyle = 'white';
       ctx.stroke();
       continue;
     }
@@ -29,16 +30,18 @@ export function render(world, canvas) {
     if (obj.type === 'init') {
       ctx.beginPath();
       ctx.arc(x, y, size / 3, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'blue'; // set stroke color to blue
+      ctx.strokeStyle = 'blue'; 
       ctx.stroke();
       continue;
     }
     
 
+    
     // Draw lines between trigs based on their ports
     if (obj.type === 'trig') {
       for (const [portIndex, port] of obj.ports.entries()) {
         const target = world[port.target];
+        if (!obj || !target) return;
         const a = `${id}-${portIndex}`;
         const b = `${port.target}-${port.slot}`;
         const lineKey = id <= port.target ? `${a}-${b}` : `${b}-${a}`;
@@ -57,11 +60,33 @@ export function render(world, canvas) {
       }
     }
 
-    // Draw a circle for 'trig' type
+    // Draw rectangle and text for 'val' type
+    if (obj.type === 'val') {
+      const padding = 5;
+      const { name } = obj;
+      ctx.font = '16px Arial';
+      const textWidth = ctx.measureText(name).width;
+
+      // Draw rectangle
+      ctx.beginPath();
+      ctx.rect(x - textWidth / 2 - padding, y - 8 - padding, textWidth + 2 * padding, 16 + 2 * padding);
+      ctx.strokeStyle = 'black';
+      ctx.fillStyle = 'white';
+      ctx.fill();
+      ctx.stroke();
+
+      // Draw name
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(name, x, y);
+      continue;
+    }
+
     if (obj.type === 'trig') {
       ctx.beginPath();
       ctx.arc(x, y, size, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'black'; // set stroke color to black (or any other color you like)
+      ctx.strokeStyle = 'black'; 
       ctx.fillStyle = 'white';
       ctx.fill();
       ctx.stroke();
@@ -69,7 +94,7 @@ export function render(world, canvas) {
 
     // Draw the label
     ctx.font = '16px Arial';
-    ctx.fillStyle = 'black'; // Choose the text color, e.g., black
+    ctx.fillStyle = 'black'; 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(obj.label, x, y);
