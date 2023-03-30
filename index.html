@@ -7,12 +7,16 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="lambda-input-container">
+    <input type="text" id="lambdaInput" placeholder="Enter lambda term">
+    <button id="submitLambda">Submit</button>
+  </div>
   <div class="sliders-container">
     <div class="slider-row">
       <div class="label-container">
         <label for="repulsion">Repulsion:</label>
       </div>
-      <input type="range" id="repulsion" min="0" max="100" step="0.5" value="10">
+      <input type="range" id="repulsion" min="0" max="200" step="1" value="40">
       <div class="slider-value-container">
         <span class="slider-value" id="repulsion-value"></span>
       </div>
@@ -21,7 +25,7 @@
       <div class="label-container">
         <label for="attraction">Attraction:</label>
       </div>
-      <input type="range" id="attraction" min="0" max="100" step="0.5" value="10">
+      <input type="range" id="attraction" min="0" max="200" step="0.5" value="40">
       <div class="slider-value-container">
         <span class="slider-value" id="attraction-value"></span>
       </div>
@@ -30,7 +34,7 @@
       <div class="label-container">
         <label for="cooling">Cooling:</label>
       </div>
-      <input type="range" id="cooling" min="90" max="100" step="0.1" value="99">
+      <input type="range" id="cooling" min="90" max="100" step="0.1" value="99.8">
       <div class="slider-value-container">
         <span class="slider-value" id="cooling-value"></span>
       </div>
@@ -39,6 +43,6 @@
   <div class="canvas-container">
     <canvas id="interactionCanvas" width="2000" height="1000"></canvas>
   </div>
-  <script src="index.js"></script>
+  <script type="module" src="js/index.js"></script>
 </body>
 </html>

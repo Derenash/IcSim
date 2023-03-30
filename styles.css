@@ -37,7 +37,6 @@ canvas {
   width: 120px;
 }
 
-
 .slider-row input[type="range"] {
   flex: 3;
 }
@@ -46,4 +45,37 @@ canvas {
   /* margin-left: 10px; */
   text-align: right;
   font-family: 'Courier New', monospace;
+}
+
+/* Add styles for the new input field and submit button */
+.lambda-input-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#lambdaInput {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+#submitLambda {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+#submitLambda:hover {
+  background-color: #45a049;
 }
