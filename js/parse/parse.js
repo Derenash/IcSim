@@ -1,7 +1,7 @@
-import { randomizeWorldPositions, world } from './world.js';
-import { startingTerm} from './params.js';
+import { randomizeWorldPositions, world } from '../model/world.js';
+import { startingTerm} from '../controller/params.js';
 
-// Parse:
+// Parse
 export function parseLambdaTerm(term) {
   const nodes = {};
   let open_ports = {};
@@ -134,7 +134,7 @@ export function parseLambdaTerm(term) {
           ori_node.ports[open_port.slot] = des_port
           nodes[open_port.uses[0].target] = des_node;
           nodes[open_port.target] = ori_node;
-          delete open_ports[variable]; // Remove this variable from open_ports
+          delete open_ports[variable];
         }
         // If there are multiple uses for this variable, create a duplicate node and split the uses
         // and connect the original node into the dup

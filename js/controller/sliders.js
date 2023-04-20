@@ -1,18 +1,12 @@
-import { physicsParams, reductionStart } from './params.js';
-
-export let reduction = reductionStart;
+import { param } from './params.js';
 
 // Sliders
 const repulsionSlider  = document.getElementById('repulsion');
 const attractionSlider = document.getElementById('attraction');
-const coolingSlider    = document.getElementById('cooling');
+const frictionSlider   = document.getElementById('friction');
 const repulsionValue   = document.getElementById('repulsion-value');
 const attractionValue  = document.getElementById('attraction-value');
-const coolingValue     = document.getElementById('cooling-value');
-
-export let repulsion  = physicsParams.repulsion;
-export let attraction = physicsParams.attraction;
-export let cooling    = physicsParams.cooling;
+const frictionValue    = document.getElementById('friction-value');
 
 function updateSliderValueDisplay(slider, displayElement) {
   displayElement.textContent = slider.value;
@@ -20,21 +14,21 @@ function updateSliderValueDisplay(slider, displayElement) {
 
 updateSliderValueDisplay(repulsionSlider, repulsionValue);
 updateSliderValueDisplay(attractionSlider, attractionValue);
-updateSliderValueDisplay(coolingSlider, coolingValue);
+updateSliderValueDisplay(frictionSlider, frictionValue);
 
 repulsionSlider.addEventListener('input', (e) => {
-  repulsion = parseFloat(e.target.value);
+  param.repStr = parseFloat(e.target.value);
   updateSliderValueDisplay(e.target, repulsionValue);
 });
 
 attractionSlider.addEventListener('input', (e) => {
-  attraction = parseFloat(e.target.value);
+  param.attStr = parseFloat(e.target.value);
   updateSliderValueDisplay(e.target, attractionValue);
 });
 
-coolingSlider.addEventListener('input', (e) => {
-  cooling = parseFloat(e.target.value);
-  updateSliderValueDisplay(e.target, coolingValue);
+frictionSlider.addEventListener('input', (e) => {
+  param.friction = parseFloat(e.target.value);
+  updateSliderValueDisplay(e.target, frictionValue);
 });
 
 // Button implementation
@@ -45,27 +39,38 @@ function handleReductionButtonClick(event) {
 
   // Deselect all buttons
   reductionButtons.forEach((button) => {
-    button.classList.remove("active");
+    button.classList.remove('active');
   });
 
   // Select the clicked button
-  targetButton.classList.add("active");
+  targetButton.classList.add('active');
 
   // Get the value from the data-value attribute
-  reduction = targetButton.getAttribute("data-value");
-  console.log("Selected reduction:", reduction);
+  param.reductions = targetButton.getAttribute('data-value');
+  console.log('Selected reduction:', param.reductions);
 }
 
 // Add event listeners to the buttons
 reductionButtons.forEach((button) => {
-  button.addEventListener("click", handleReductionButtonClick);
+  button.addEventListener('click', handleReductionButtonClick);
 });
 
+// Define a setter for param.reductions
+Object.defineProperty(param, 'reductions', {
+  set(value) {
+    this._reductions = value;
+    console.log('param.reductions changed:', value);
+    updateReductionSelect(value);
+  },
+  get() {
+    return this._reductions;
+  },
+});
 
 export function updateReductionSelect(value) {
   // Find the button with the matching data-value attribute
   const targetButton = Array.from(reductionButtons).find(
-    (button) => button.getAttribute("data-value") === value
+    (button) => button.getAttribute('data-value') === value
   );
 
   // If a matching button is found, simulate a click event on it

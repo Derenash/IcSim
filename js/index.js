@@ -1,13 +1,13 @@
-import { render, canvas, camera } from './canvas.js';
-import { tickInterval } from './params.js';
-import { world } from './world.js';
-import { tick } from './physics.js';
-import './parse.js';
-import './sliders.js';
+import { render, canvas, camera } from './draw/canvas.js';
+import { tickInterval, param } from './controller/params.js';
+import { world } from './model/world.js';
+import { tick } from './model/physics.js';
+import './parse/parse.js';
+import './controller/sliders.js';
 
 
 setInterval(() => {
-  tick(world);
+  tick(world, param);
   render(world, canvas, camera);
 }, tickInterval);
 
